@@ -1,4 +1,4 @@
-#Form Bulder using API
+#Form Builder using API
 
 Link to project https://artem-alek.github.io/form-builder/
 
