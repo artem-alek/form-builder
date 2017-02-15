@@ -6,31 +6,51 @@ function getData (callback) {
   })
 }
 
-function formTemplate (info, i) {
+function formTemplate (info) {
   return `
-      <i class='fa ${info[i].icon}' aria-hidden='true'></i>
-      <input type='${info[i].type}' id='${info[i].id}' placeholder='${info[i].label}'>
+      <i class='fa ${info.icon}' aria-hidden='true'></i>
+      <input type='${info.type}' id='${info.id}' placeholder='${info.label}'>
   `
 }
 
 function updateInputs (data) {
-  console.log(data);
   for (var i = 0; i < data.length; i++){
-    if (data[i].type === 'select') {
-      var info2 = data.info[i];
-      console.log(info2);
-      lanuage(info2);
-    }
-    var formHtml = formTemplate(data, i);
-    $('.form-inputs').append(formHtml);
+    var info = data[i];
+    if (info.type === 'select') {
+      $('.form-inputs').append(language(info));
+    } else if (info.type === 'textarea') {
+        $('.form-inputs').append(textBox(info));
+    } else {
+        var formHtml = formTemplate(info);
+        $('.form-inputs').append(formHtml);
+      }
   }
 }
 
-function language (info2) {
+function language (info) {
+
   return `
-    <select type='${info2.type}' id='${info2.id}' placeholder='${info2.label}'>
-      <option>${function (info2) { info2.option.label }}</option>
+    <select class="selection" type='${info.type}' id='${info.id}'>
+      <option>${info.label}...</option>
+      ${getOptions(info.options)}
+    </select>
   `
 }
+
+function getOptions (option) {
+  return option.map(function (x) { return `<option>${x.label}</option>` }).join("");
+}
+
+function textBox (text) {
+  return `
+    <i class='fa ${text.icon}' aria-hidden='true'></i>
+    <textarea type='${text.type}' id='${text.id}' placeholder='${text.label}'></textarea>
+  `
+}
+  // var html = "";
+  // for (var i=0; i < option.length; i++) {
+  //   html += `<option>${option[i].label}</option>`
+  // }
+  // return html;
 
 getData(updateInputs);
