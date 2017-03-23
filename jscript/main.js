@@ -1,6 +1,6 @@
 function getData (callback) {
   $.ajax({
-    url: 'http://json-data.herokuapp.com/forms',
+    url: 'https://json-data.herokuapp.com/forms',
     dataType: 'json',
     success: callback
   })
